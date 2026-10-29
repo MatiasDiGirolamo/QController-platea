@@ -1,0 +1,28 @@
+QController platea — v0.9.0
+
+ACTUALIZAR
+En chrome://extensions pulsá Recargar en QController platea. Después recargá Boca Socios y comprobá que el panel diga v0.9.0. Para instalar desde el ZIP, descomprimilo y cargá la carpeta que contiene manifest.json.
+Marcá los sectores, elegí el intervalo y pulsá Iniciar búsqueda.
+
+RESERVA DIRECTA
+Desde el mapa consulta los sectores y, cuando hay un lugar elegido, consulta asientos y envía directamente la misma solicitud de reserva que usa Boca. No carga la pantalla de asientos ni espera el botón AGREGAR PLATEA.
+Verifica primero que el carrito esté vacío y que las respuestas correspondan al partido. Elige un asiento disponible al azar y manda un único agregado. Si hay un solo socio habilitado, intenta asignárselo, igual que el sitio. Después confirma el mismo ticket y asiento en el carrito.
+Con exactamente una reserva asignada abre el paso de pago mediante navegación interna. Si hay varios socios, falta asignar o hay datos de invitado, abre la pantalla de asientos para completar esos pasos manualmente. No paga ni acepta condiciones.
+
+VELOCIDAD
+La primera consulta se hace al iniciar. El intervalo se mide entre inicios de consultas y descuenta el tiempo de respuesta. El valor inicial es 3 segundos. Se conserva la opción de 1 segundo y se respeta si ya estaba guardada. Se quitó la opción de 0,5 segundos; si estaba guardada, se reemplaza por 3 segundos. No conocemos un límite oficial de Boca: ningún intervalo garantiza evitar restricciones o bloqueos.
+Una sola consulta del monitor puede estar en curso. Los controles previos de carrito, sector, asientos y socios se consultan en paralelo una vez detectada disponibilidad. La respuesta del servidor y la competencia por el asiento siguen determinando el resultado; no es instantáneo.
+
+DETENER Y REINTENTOS
+Detener cancela lecturas en curso y evita enviar una reserva que todavía no salió. No revierte una reserva ya enviada. Mientras se verifica ese resultado no permite iniciar otra búsqueda.
+Si se corta la red o Boca no confirma después del agregado, se detiene y pide revisar el carrito: no repite automáticamente el POST. Solo reintenta cuando Boca rechaza explícitamente la ubicación y se confirma un carrito vacío.
+Se detiene ante sesión vencida, cola o límite de consultas (401/403/429). Una falla transitoria de disponibilidad se vuelve a consultar sin recargar toda la página.
+
+COMPATIBILIDAD
+El flujo directo reutiliza en memoria el cliente HTTP de la página y sus validaciones de sesión/cola. No almacena ni muestra tokens, cookies o contraseñas. Los contratos se comprobaron en el JavaScript público de Boca del 29/10/2026; las referencias están en research/CONTRATO.md de la carpeta de desarrollo.
+Si la versión del sitio no permite usar ese cliente o cambian los formatos antes del agregado, utiliza el flujo anterior de selección en pantalla. Los sectores elegidos se respetan también cuando un código no está reconocido en el mapa.
+La recuperación por Inicio y la selección en pantalla se conservan. Ante un agregado incierto no se reanuda ese paso después de recargar.
+
+VALIDACIÓN
+Se verificaron con respuestas simuladas el contrato de reserva, la asignación, la confirmación de carrito, las cancelaciones, la concurrencia y los errores. No se ejecutó una reserva real para probar esta versión. Revisá el resultado en Boca; no se garantiza conseguir una entrada.
+Mantené la pestaña abierta y el equipo despierto. Chrome puede limitar temporizadores y sonido en segundo plano.

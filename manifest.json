@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "QController platea",
+  "version": "0.9.0",
+  "description": "Intenta seleccionar una platea y avanzar hasta pago manual.",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://bocasocios.bocajuniors.com.ar/*"
+      ],
+      "js": [
+        "page-api.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://bocasocios.bocajuniors.com.ar/*"
+      ],
+      "js": [
+        "monitor.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  }
+}

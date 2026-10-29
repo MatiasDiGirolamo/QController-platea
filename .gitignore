@@ -1,0 +1,9 @@
+*.zip
+boca-public.html
+research/*
+!research/CONTRATO.md
+.codebase-memory/
+node_modules/
+.env
+.env.*
+*.log
